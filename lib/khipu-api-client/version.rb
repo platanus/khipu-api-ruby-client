@@ -1,3 +1,3 @@
 module Khipu
-  VERSION = ""
+  VERSION = "2.9.1.patch1"
 end
