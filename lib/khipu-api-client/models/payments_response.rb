@@ -1,12 +1,12 @@
 module Khipu
   # 
   class PaymentsResponse < BaseObject
-    attr_accessor :payment_id, :payment_url, :simplified_transfer_url, :transfer_url, :webpay_url, :hites_url, :payme_url, :app_url, :ready_for_terminal, :notification_token, :receiver_id, :conciliation_date, :subject, :amount, :currency, :status, :status_detail, :body, :picture_url, :receipt_url, :return_url, :cancel_url, :notify_url, :notify_api_version, :expires_date, :attachment_urls, :bank, :bank_id, :payer_name, :payer_email, :personal_identifier, :bank_account_number, :out_of_date_conciliation, :transaction_id, :custom, :responsible_user_email, :send_reminders, :send_email, :payment_method
+    attr_accessor :payment_id, :payment_url, :simplified_transfer_url, :transfer_url, :webpay_url, :hites_url, :payme_url, :app_url, :ready_for_terminal, :notification_token, :receiver_id, :conciliation_date, :subject, :amount, :currency, :status, :status_detail, :body, :picture_url, :receipt_url, :return_url, :cancel_url, :notify_url, :notify_api_version, :expires_date, :attachment_urls, :bank, :bank_id, :payer_name, :payer_email, :personal_identifier, :bank_account_number, :out_of_date_conciliation, :transaction_id, :custom, :responsible_user_email, :send_reminders, :send_email, :payment_method, :funds_source
     # attribute mapping from ruby-style variable name to JSON key
     def self.attribute_map
       {
         
-        # Identificador único del pago, es una cadena alfanumérica de 12 caracteres
+        # Identificador único del pago, es una cadena alfanumérica de 12 caracteres. Cómo este identificador es único, se puede usar, por ejemplo, para evitar procesar una notificación repetida. (Khipu espera un código 200 al notificar un pago, si esto no ocurre se reintenta hasta por dos días).
         :'payment_id' => :'payment_id',
         
         # URL principal del pago, si el usuario no ha elegido previamente un método de pago se le muestran las opciones
@@ -121,7 +121,10 @@ module Khipu
         :'send_email' => :'send_email',
         
         # Método de pago usado por el pagador, puede ser &#39;regular_transfer&#39; (transferencia normal), &#39;simplified_transfer&#39; (transferencia simplificada) o &#39;not_available&#39; (para un pago marcado como realizado por otro medio por el cobrador).
-        :'payment_method' => :'payment_method'
+        :'payment_method' => :'payment_method',
+        
+        # Origen de fondos usado por el pagador, puede ser &#39;debit&#39; para pago con débito, &#39;prepaid&#39; para pago con prepago, &#39;credit&#39; para pago con crédito o vacío en el caso de que se haya pagado mediante transferencia bancaria.
+        :'funds_source' => :'funds_source'
         
       }
     end
@@ -167,7 +170,8 @@ module Khipu
         :'responsible_user_email' => :'String',
         :'send_reminders' => :'BOOLEAN',
         :'send_email' => :'BOOLEAN',
-        :'payment_method' => :'String'
+        :'payment_method' => :'String',
+        :'funds_source' => :'String'
         
       }
     end
@@ -335,6 +339,10 @@ module Khipu
       
       if attributes[:'payment_method']
         self.payment_method = attributes[:'payment_method']
+      end
+      
+      if attributes[:'funds_source']
+        self.funds_source = attributes[:'funds_source']
       end
       
     end
