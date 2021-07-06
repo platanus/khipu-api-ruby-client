@@ -1,5 +1,6 @@
 require 'uri'
 require 'singleton'
+require 'addressable/uri'
 
 module Khipu
   class Configuration
@@ -149,7 +150,7 @@ module Khipu
 
     def base_url
       url = "#{scheme}://#{[host, base_path].join('/').gsub(/\/+/, '/')}".sub(/\/+\z/, '')
-      URI.encode(url)
+      Addressable::URI.encode_component(url)
     end
 
     # Gets API key (with prefix if set).
